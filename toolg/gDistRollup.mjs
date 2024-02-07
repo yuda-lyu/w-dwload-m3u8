@@ -10,7 +10,10 @@ rollupFiles({
     fns: 'WDwloadM3u8.mjs',
     fdSrc,
     fdTar,
-    nameDistType: 'kebabCase',
+    // nameDistType: 'kebabCase',
+    hookNameDist: () => {
+        return 'w-dwload-m3u8'
+    },
     globals: {
         'path': 'path',
         'fs': 'fs',
