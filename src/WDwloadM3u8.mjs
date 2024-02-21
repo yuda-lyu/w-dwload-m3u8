@@ -197,9 +197,11 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         let nn = size(vps)
         // console.log('nn', nn)
 
+        //min
+        nn = Math.min(nn, na) //因最後階段若為產生合併ts, 此時又剛好觸發偵測而nn會大於na(也就是nn-na=1), 故須限制nn最高為na
+
         //prog
         if (na > 0 && nnPre !== nn) {
-            nn = Math.min(nn, na) //因最後階段若為產生合併ts, 此時又剛好觸發偵測而nn會大於na(也就是nn-na=1), 故須限制nn最高為na
             let prog = nn / na * 100
             // console.log('prog', prog)
             if (bFunProg) {
@@ -226,8 +228,6 @@ async function WDwloadM3u8(url, fp, opt = {}) {
             console.log('execProcess catch', err)
             errTemp = 'execProcess error'
         })
-        // .finally(() => {
-        // })
 
     //clearInterval
     clearInterval(t)
@@ -256,8 +256,6 @@ async function WDwloadM3u8(url, fp, opt = {}) {
                 //console.log('execProcess catch', err)
                 //特殊偵測處理, 不再提供報錯訊尋
             })
-            // .finally(() => {
-            // })
 
     }
 
