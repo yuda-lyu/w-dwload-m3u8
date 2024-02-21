@@ -4,7 +4,8 @@ import WDwloadM3u8 from './src/WDwloadM3u8.mjs'
 async function test() {
 
     //url
-    let url = `https://ikcdn01.ikzybf.com/20221214/IEiv7MwN/index.m3u8`
+    // let url = `https://ikcdn01.ikzybf.com/20221214/IEiv7MwN/index.m3u8`
+    let url = `https://ikcdn01.ikzybf.com/20240219/jyyK8mSn/index.m3u8` //m3u8的method為NONE, 僅產生ts
 
     //fp
     let fp = './moon01.mp4'
