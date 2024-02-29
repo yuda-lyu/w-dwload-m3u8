@@ -173,6 +173,7 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     let om = null
     let bFunProg = isfun(funProg)
     let nnPre = -1
+    let nnMax = -1
     let t = setInterval(() => {
 
         //na
@@ -197,7 +198,11 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         let nn = size(vps)
         // console.log('nn', nn)
 
-        //min
+        //max
+        nnMax = Math.max(nnMax, nn) //最後階段會依照各part資料夾各自產生合併ts, 會導致ts數量大減, 故須取最大值
+
+        //limit
+        nn = Math.max(nn, nnMax) //合併ts階段會導致ts數量大減, 故須取最大值
         nn = Math.min(nn, na) //因最後階段若為產生合併ts, 此時又剛好觸發偵測而nn會大於na(也就是nn-na=1), 故須限制nn最高為na
 
         //prog
