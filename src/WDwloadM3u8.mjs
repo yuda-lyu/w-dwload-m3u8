@@ -274,7 +274,8 @@ async function WDwloadM3u8(url, fp, opt = {}) {
 
     //check
     if (!fsIsFile(fpInMp4)) {
-        errTemp = `can not find the merged file[${fnMp4}]`
+        console.log(`can not find the merged file[${fnMp4}]`)
+        errTemp = `invalid url[${url}] or can not download`
         return Promise.reject(errTemp)
     }
 
