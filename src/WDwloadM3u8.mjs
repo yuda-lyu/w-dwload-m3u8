@@ -193,9 +193,9 @@ async function WDwloadM3u8(url, fp, opt = {}) {
             vps = fsTreeFolder(fdDownloadsId, null)
         }
         catch (err) {
-            console.log(err)
-            errTemp = err.message
-            clearInterval(t)
+            // console.log(err)
+            // errTemp = err.message
+            // clearInterval(t)
         }
         // console.log('vps(ori)', vps)
         vps = filter(vps, (v) => {
