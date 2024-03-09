@@ -192,7 +192,11 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         try {
             vps = fsTreeFolder(fdDownloadsId, null)
         }
-        catch (err) {}
+        catch (err) {
+            console.log(err)
+            errTemp = err.message
+            clearInterval(t)
+        }
         // console.log('vps(ori)', vps)
         vps = filter(vps, (v) => {
             let ext = getFileNameExt(v.name)
