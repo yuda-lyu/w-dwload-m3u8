@@ -1,0 +1,6 @@
+﻿LOG 2024/03/23
+Save Path: D:\- 006 -        開源\開源-JS-003-2-w-dwload-m3u8\w-dwload-m3u8\N_m3u8DL-CLI-3.0.2\Logs
+Task Start: 2024/03/23 16:50:21
+Task CommandLine: "D:\- 006 -        開源\開源-JS-003-2-w-dwload-m3u8\w-dwload-m3u8\N_m3u8DL-CLI-3.0.2\N_m3u8DL-CLI.exe"  "https://test-streams.mux.dev/tos_ismc/main.m3u8" --saveName "20240323165021-VGKZHP"
+
+16:50:21.614 / (NORMAL) 開始解析 https://test-streams.mux.dev/tos_ismc/main.m3u8
