@@ -1,6 +1,6 @@
 {
   "name": "w-dwload-m3u8",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "main": "dist/w-dwload-m3u8.umd.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
