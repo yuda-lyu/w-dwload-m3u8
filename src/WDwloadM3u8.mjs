@@ -52,8 +52,8 @@ function isWindows() {
  *     let fp = './moon01.mp4'
  *
  *     //funProg
- *     let funProg = (prog, nn, na) => {
- *         console.log('prog', `${prog.toFixed(2)}%`, nn, na)
+ *     let funProg = (prog, nn, nnTotal) => {
+ *         console.log('prog', `${prog.toFixed(2)}%`, nn, nnTotal)
  *     }
  *
  *     //WDwloadM3u8
@@ -174,18 +174,20 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     let bFunProg = isfun(funProg)
     let nnPre = -1
     let nnMax = -1
+    let nnTotal = 0
     let t = setInterval(() => {
 
-        //na
-        let na = get(om, 'm3u8Info.count', 0)
-        if (na === 0) {
+        //nnTotal
+        nnTotal = get(om, 'm3u8Info.count', 0)
+        if (nnTotal === 0) {
             if (fsIsFile(fpDownloadsIdMeta)) {
                 let j = fs.readFileSync(fpDownloadsIdMeta, 'utf8')
                 om = j2o(j)
+                nnTotal = get(om, 'm3u8Info.count', 0)
             }
         }
         // console.log('om', om)
-        // console.log('na', na)
+        // console.log('nnTotal', nnTotal)
 
         //nn
         let vps = []
@@ -211,15 +213,15 @@ async function WDwloadM3u8(url, fp, opt = {}) {
 
         //limit
         nn = Math.max(nn, nnMax) //合併ts階段會導致ts數量大減, 故須取最大值
-        nn = Math.min(nn, na) //因最後階段若為產生合併ts, 此時又剛好觸發偵測而nn會大於na(也就是nn-na=1), 故須限制nn最高為na
+        nn = Math.min(nn, nnTotal) //因最後階段若為產生合併ts, 此時又剛好觸發偵測而nn會大於na(也就是nn-nnTotal=1), 故須限制nn最高為na
 
-        //prog
-        if (na > 0 && nnPre !== nn) {
-            let prog = nn / na * 100
+        //funProg
+        if (nnTotal > 0 && nnPre !== nn) {
+            let prog = nn / nnTotal * 100
             // console.log('prog', prog)
             if (bFunProg) {
-                // console.log('prog', nn, na, prog)
-                funProg(prog, nn, na)
+                // console.log('prog', nn, nnTotal, prog)
+                funProg(prog, nn, nnTotal)
             }
         }
 
@@ -315,6 +317,11 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     errTemp = get(rc, 'error')
     if (errTemp) {
         return Promise.reject(errTemp.toString())
+    }
+
+    //funProg
+    if (bFunProg) {
+        funProg(100, nnTotal, nnTotal)
     }
 
     return 'ok'
