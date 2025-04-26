@@ -1,0 +1,29 @@
+{
+  "name": "w-dwload-m3u8",
+  "version": "1.0.15",
+  "main": "dist/w-dwload-m3u8.umd.js",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "wsemi": "^1.7.89"
+  },
+  "devDependencies": {
+    "w-package-tools": "^1.0.87"
+  },
+  "scripts": {
+    "test": "mocha --parallel --timeout 60000",
+    "deploy": "gh-pages -d docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuda-lyu/w-dwload-m3u8.git"
+  },
+  "keywords": [
+    "package",
+    "tool",
+    "m3u8",
+    "windows",
+    "nodejs"
+  ],
+  "author": "yuda-lyu(semisphere)",
+  "license": "MIT"
+}
