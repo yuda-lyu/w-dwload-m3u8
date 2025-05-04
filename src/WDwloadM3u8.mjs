@@ -217,7 +217,7 @@ async function WDwloadM3u8(url, fp, opt = {}) {
 
         //funProg
         if (nnTotal > 0 && nnPre !== nn) {
-            let prog = nn / nnTotal * 100
+            let prog = nn / nnTotal * 99 //最高99%, 因可能還有轉檔, 故最後100%改由最後完成階段觸發
             // console.log('prog', prog)
             if (bFunProg) {
                 // console.log('prog', nn, nnTotal, prog)
