@@ -13,7 +13,6 @@ import isestr from 'wsemi/src/isestr.mjs'
 import isfun from 'wsemi/src/isfun.mjs'
 import execProcess from 'wsemi/src/execProcess.mjs'
 import fsIsFile from 'wsemi/src/fsIsFile.mjs'
-import fsIsFolder from 'wsemi/src/fsIsFolder.mjs'
 import fsCopyFile from 'wsemi/src/fsCopyFile.mjs'
 import fsCleanFolder from 'wsemi/src/fsCleanFolder.mjs'
 import fsDeleteFile from 'wsemi/src/fsDeleteFile.mjs'
@@ -103,24 +102,35 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         return Promise.reject('url is not a file')
     }
 
+    //fnExe
+    let fnExe = `N_m3u8DL-CLI.exe`
+
     //fdExe
-    let fdms = 'N_m3u8DL-CLI-3.0.2'
-    let fdExeSelf = `${fdSrv}/${fdms}/`
-    let fdExeDist = `${fdSrv}/node_modules/w-dwload-m3u8/${fdms}/`
-    let fdExe = fdExeSelf
-    if (fsIsFolder(fdExeDist)) {
-        fdExe = fdExeDist
+    let fdExe = ''
+    if (true) {
+        let fdExeSrc = `${fdSrv}/N_m3u8DL-CLI-3.0.2/`
+        let fdExeNM = `${fdSrv}/node_modules/w-dwload-m3u8/N_m3u8DL-CLI-3.0.2/`
+        if (fsIsFile(`${fdExeSrc}${fnExe}`)) {
+            fdExe = fdExeSrc
+        }
+        else if (fsIsFile(`${fdExeNM}${fnExe}`)) {
+            fdExe = fdExeNM
+        }
+        else {
+            return Promise.reject('can not find folder for N_m3u8DL-CLI')
+        }
     }
+    // console.log('fdExe', fdExe)
 
-    //exeDl
-    let exeDl = path.resolve(fdExe, 'N_m3u8DL-CLI.exe')
-    // exeDl = `"${exeDl}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
-    // console.log('exeDl', exeDl)
+    //fpExeDl
+    let fpExeDl = path.resolve(fdExe, fnExe)
+    // fpExeDl = `"${fpExeDl}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
+    // console.log('fpExeDl', fpExeDl)
 
-    //exeFfmpeg
-    let exeFfmpeg = path.resolve(fdExe, 'ffmpeg.exe')
-    // exeFfmpeg = `"${exeFfmpeg}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
-    // console.log('exeFfmpeg', exeFfmpeg)
+    //fpExeFfmpeg
+    let fpExeFfmpeg = path.resolve(fdExe, 'ffmpeg.exe')
+    // fpExeFfmpeg = `"${fpExeFfmpeg}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
+    // console.log('fpExeFfmpeg', fpExeFfmpeg)
 
     //cwdOri, cwdTar
     let cwdOri = process.cwd()
@@ -195,22 +205,21 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         // console.log('nnTotal', nnTotal)
 
         //nn
-        let vps = []
-        try {
-            vps = fsTreeFolder(fdDownloadsId, null)
+        let nn = 0
+        if (true) {
+            let vps = []
+            try {
+                vps = fsTreeFolder(fdDownloadsId, null)
+            }
+            catch (err) {}
+            // console.log('vps(ori)', vps)
+            vps = filter(vps, (v) => {
+                let ext = getFileNameExt(v.name)
+                return ext === 'ts'
+            })
+            // console.log('vps(filter)', vps)
+            nn = size(vps)
         }
-        catch (err) {
-            // console.log(err)
-            // errTemp = err.message
-            // clearInterval(t)
-        }
-        // console.log('vps(ori)', vps)
-        vps = filter(vps, (v) => {
-            let ext = getFileNameExt(v.name)
-            return ext === 'ts'
-        })
-        // console.log('vps(filter)', vps)
-        let nn = size(vps)
         // console.log('nn', nn)
 
         //max
@@ -241,13 +250,13 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     // console.log('cmdDl', cmdDl)
 
     //execProcess
-    await execProcess(exeDl, cmdDl)
+    await execProcess(fpExeDl, cmdDl)
         // .then(function(res) {
         //     console.log('execProcess then', res)
         // })
         .catch((err) => {
             console.log('execProcess catch', err)
-            errTemp = 'execProcess error'
+            errTemp = err.toString()
         })
 
     //clearInterval
@@ -257,7 +266,7 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     process.chdir(cwdOri)
 
     //check
-    if (isestr(errTemp)) {
+    if (errTemp) {
         return Promise.reject(errTemp)
     }
 
@@ -270,7 +279,7 @@ async function WDwloadM3u8(url, fp, opt = {}) {
         // console.log('cmdFfmpeg', cmdFfmpeg)
 
         //execProcess
-        await execProcess(exeFfmpeg, cmdFfmpeg)
+        await execProcess(fpExeFfmpeg, cmdFfmpeg)
             // .then(function(res) {
             //     console.log('execProcess then', res)
             // })
@@ -284,8 +293,7 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     //check
     if (!fsIsFile(fpInMp4)) {
         console.log(`can not find the merged file[${fnMp4}]`)
-        errTemp = `invalid url[${url}] or can not download`
-        return Promise.reject(errTemp)
+        return Promise.reject(`invalid url[${url}] or can not download`)
     }
 
     //fpOut
