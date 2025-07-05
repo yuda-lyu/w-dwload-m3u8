@@ -41,19 +41,20 @@ function isWindows() {
  * @param {Function} [opt.funProg=null] 輸入回傳進度函數，傳入參數為prog代表進度百分比、nn代表當前已下載ts檔案數量、na代表全部須下載ts檔案數量，預設null
  * @returns {Promise} 回傳Promise，resolve回傳成功訊息，reject回傳錯誤訊息
  * @example
+ * import fs from 'fs'
  * import WDwloadM3u8 from './src/WDwloadM3u8.mjs'
  *
  * async function test() {
  *
  *     //url
- *     let url = `https://ikcdn01.ikzybf.com/20221214/IEiv7MwN/index.m3u8`
+ *     let url = `https://cdn.jsdelivr.net/npm/w-demores@1.0.28/res/video/aigen_hls/playlist.m3u8`
  *
  *     //fp
- *     let fp = './moon01.mp4'
+ *     let fp = './abc.mp4'
  *
  *     //funProg
- *     let funProg = (prog, nn, nnTotal) => {
- *         console.log('prog', `${prog.toFixed(2)}%`, nn, nnTotal)
+ *     let funProg = (prog, nn, na) => {
+ *         console.log('prog', `${prog.toFixed(2)}%`, nn, na)
  *     }
  *
  *     //WDwloadM3u8
@@ -62,18 +63,22 @@ function isWindows() {
  *         funProg,
  *     })
  *
+ *     //len
+ *     let len = fs.statSync(fp).size
+ *     console.log('len', len)
+ *
  *     console.log('done:', fp)
  * }
  * test()
  *     .catch((err) => {
  *         console.log('catch', err)
  *     })
- * // prog 0.14% 1 708
- * // prog 1.41% 10 708
- * // ...
- * // prog 99.86% 707 708
- * // prog 100.00% 708 708
- * // done: ./moon01.mp4
+ * // prog 0.00% 0 1
+ * // prog 100.00% 1 1
+ * // len 283236
+ * // done: ./abc.mp4
+ *
+ * //node g.mjs
  *
  */
 async function WDwloadM3u8(url, fp, opt = {}) {
@@ -109,12 +114,12 @@ async function WDwloadM3u8(url, fp, opt = {}) {
 
     //exeDl
     let exeDl = path.resolve(fdExe, 'N_m3u8DL-CLI.exe')
-    exeDl = `"${exeDl}"` //用雙引號包住避免路徑有空格
+    // exeDl = `"${exeDl}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
     // console.log('exeDl', exeDl)
 
     //exeFfmpeg
     let exeFfmpeg = path.resolve(fdExe, 'ffmpeg.exe')
-    exeFfmpeg = `"${exeFfmpeg}"` //用雙引號包住避免路徑有空格
+    // exeFfmpeg = `"${exeFfmpeg}"` //用雙引號包住避免路徑有空格 //execProcess預設spawn不須用雙引號括住
     // console.log('exeFfmpeg', exeFfmpeg)
 
     //cwdOri, cwdTar
@@ -231,7 +236,8 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     }, 1000)
 
     //cmdDl
-    let cmdDl = `"${url}" --saveName "${id}"`
+    // let cmdDl = `"${url}" --saveName "${id}"`
+    let cmdDl = [url, '--saveName', id] //execProcess預設spawn不須用雙引號括住
     // console.log('cmdDl', cmdDl)
 
     //execProcess
@@ -259,7 +265,8 @@ async function WDwloadM3u8(url, fp, opt = {}) {
     if (!fsIsFile(fpInMp4) && fsIsFile(fpInTs)) {
 
         //cmdFfmpeg
-        let cmdFfmpeg = `-i "${fpInTs}" -vcodec copy -acodec copy "${fpInMp4}"`
+        // let cmdFfmpeg = `-i "${fpInTs}" -vcodec copy -acodec copy "${fpInMp4}"`
+        let cmdFfmpeg = ['-i', fpInTs, '-vcodec', 'copy', '-acodec', 'copy', fpInMp4] //execProcess預設spawn不須用雙引號括住
         // console.log('cmdFfmpeg', cmdFfmpeg)
 
         //execProcess
