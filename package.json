@@ -1,10 +1,10 @@
 {
   "name": "w-dwload-m3u8",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "main": "dist/w-dwload-m3u8.umd.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "wsemi": "^1.8.14"
+    "wsemi": "^1.8.21"
   },
   "devDependencies": {
     "w-package-tools": "^1.1.2"

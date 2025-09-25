@@ -25,7 +25,7 @@ describe('WDwloadM3u8', function() {
 
         //funProg
         let funProg = (prog, nn, na) => {
-            console.log('prog', `${prog.toFixed(2)}%`, nn, na)
+            //console.log('prog', `${prog.toFixed(2)}%`, nn, na)
         }
 
         //WDwloadM3u8

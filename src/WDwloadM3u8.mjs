@@ -77,8 +77,6 @@ function isWindows() {
  * // len 283236
  * // done: ./abc.mp4
  *
- * //node g.mjs
- *
  */
 async function WDwloadM3u8(url, fp, opt = {}) {
     let errTemp = null
