@@ -15,6 +15,7 @@ To view documentation or get support, visit [docs](https://yuda-lyu.github.io/w-
 > `w-dwload-m3u8` is basing on `N_m3u8DL-CLI`.
 
 ## Installation
+
 ### Using npm(ES6 module):
 ```alias
 npm i w-dwload-m3u8
