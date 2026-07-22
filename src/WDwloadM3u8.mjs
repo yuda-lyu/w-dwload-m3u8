@@ -46,7 +46,7 @@ function isWindows() {
  * async function test() {
  *
  *     //url
- *     let url = `https://cdn.jsdelivr.net/npm/w-demores@1.0.28/res/video/aigen_hls/playlist.m3u8`
+ *     let url = `https://cdn.jsdelivr.net/npm/w-demores/res/video/aigen_hls/playlist.m3u8`
  *
  *     //fp
  *     let fp = './abc.mp4'

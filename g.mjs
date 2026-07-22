@@ -5,7 +5,7 @@ import WDwloadM3u8 from './src/WDwloadM3u8.mjs'
 async function test() {
 
     //url
-    let url = `https://cdn.jsdelivr.net/npm/w-demores@1.0.28/res/video/aigen_hls/playlist.m3u8`
+    let url = `https://cdn.jsdelivr.net/npm/w-demores/res/video/aigen_hls/playlist.m3u8`
     // let url = `https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8`
     // let url = `https://ikcdn01.ikzybf.com/20221214/IEiv7MwN/index.m3u8` //長影片
     // let url = `https://ikcdn01.ikzybf.com/20240219/jyyK8mSn/index.m3u8` //m3u8的method為NONE, 僅產生ts
