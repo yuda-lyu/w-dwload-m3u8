@@ -1,12 +1,12 @@
 {
   "name": "w-dwload-m3u8",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "main": "dist/w-dwload-m3u8.umd.js",
   "dependencies": {
-    "wsemi": "^1.8.77"
+    "wsemi": "^1.8.78"
   },
   "devDependencies": {
-    "w-package-tools": "^1.1.13"
+    "w-package-tools": "^1.1.14"
   },
   "scripts": {
     "test": "mocha --parallel --timeout 60000",
