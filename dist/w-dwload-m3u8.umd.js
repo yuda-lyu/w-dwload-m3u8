@@ -1,5 +1,5 @@
 /*!
- * w-dwload-m3u8 v1.0.32
+ * w-dwload-m3u8 v1.0.33
  * (c) 2018-2021 yuda-lyu(semisphere)
  * Released under the MIT License.
  */
